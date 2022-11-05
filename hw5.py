@@ -8,7 +8,6 @@ class CountVectorizer:
         self._list_of_dict = []
         self._list_of_rows = []
 
-
     def fit_transform(self, sample_text: list) -> list:
         for i, sentence in enumerate(sample_text):
             if not isinstance(sentence, str):
@@ -27,10 +26,14 @@ class CountVectorizer:
                     else:
                         self._list_of_dict[i][word] += 1
 
-        
-        self._list_of_rows = [[self._list_of_dict[j].get(word, 0) for word in  self._dict_of_unique_words ] for j in range(i+1)]
+        self._list_of_rows = [
+                              [
+                               self._list_of_dict[j].get(word, 0)
+                               for word in self._dict_of_unique_words
+                              ]
+                              for j in range(i+1)
+                             ]
         return self._list_of_rows
-        
 
     def get_feature_names(self) -> list:
         return list(self._dict_of_unique_words.keys())
@@ -45,5 +48,3 @@ if __name__ == '__main__':
     vectorizer = CountVectorizer()
     count_matrix = vectorizer.fit_transform(corpus)
     print(count_matrix, vectorizer.get_feature_names())
-
-
